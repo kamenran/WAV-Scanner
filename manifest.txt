@@ -1,0 +1,2 @@
+Main-Class: WAVKeyDetector
+Class-Path: libs/TarsosDSP-2.4.1.jar libs/core-2.5.jar
