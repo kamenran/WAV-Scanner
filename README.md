@@ -120,4 +120,3 @@ java -cp "libs/*;out" WAVKeyDetector
 
 - Best results come from simple, clear audio such as vocals, single instruments, or isolated notes.
 - Dense full mixes and drum-heavy audio may produce less reliable key estimates.
-- Build output is ignored by Git. Commit source files and libraries, then attach generated zip files to GitHub Releases.
