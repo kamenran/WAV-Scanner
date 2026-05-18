@@ -18,19 +18,22 @@ WAV Scanner is a minimal desktop app that analyzes `.wav` and `.mp3` audio files
 - Java 17 or newer to run the app
 - JDK 17 or newer to build from source
 
-## Download
+## Download From GitHub
 
-For regular users, use the files attached to the latest GitHub Release:
+Download the source from GitHub, then use the launcher for your system:
 
-- `WAV-Scanner-mac.zip`
-- `WAV-Scanner-windows.zip`
+1. Click `Code`.
+2. Click `Download ZIP`.
+3. Unzip the repository.
+4. Open the project folder.
 
-Unzip the file for your system, then launch the app:
+Then launch the app:
 
 - macOS: double-click `Launch WAV Scanner.command`
 - Windows: double-click `Launch WAV Scanner.bat`
 
-The Windows download has one user-facing `.bat` file. Build-only scripts live in `scripts/` and are not needed for normal use.
+The launcher builds `dist/WAV-Scanner.jar` automatically if it does not exist yet.
+The Windows launcher is the only `.bat` file regular users need to double-click.
 
 ## Build From Source
 
@@ -76,15 +79,15 @@ This creates:
 
 Double-click `dist\Launch WAV Scanner.bat`.
 
-## GitHub Release Packaging
+## Optional GitHub Release Packaging
 
-To create release zip files, run:
+If you want to publish prebuilt downloads later, run:
 
 ```bash
 ./build.sh
 ```
 
-Attach these generated files to a GitHub Release:
+Then attach these generated local files to a GitHub Release:
 
 - `dist/packages/WAV-Scanner-mac.zip`
 - `dist/packages/WAV-Scanner-windows.zip`
