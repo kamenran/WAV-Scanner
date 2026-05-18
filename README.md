@@ -1,64 +1,120 @@
-# WAV Scanner (Console-Run Version)
+# WAV Scanner
 
-WAV Scanner is a lightweight Java application that analyzes `.wav` audio files and estimates their musical key. It uses the TarsosDSP digital signal processing library to perform pitch detection, extract note information, and compute tuning offsets. This version is designed to run directly through the console using standard JDK tools.
+WAV Scanner is a minimal desktop app that analyzes `.wav` and `.mp3` audio files and estimates the musical key. Drop in an audio file, or choose one with the native file picker, and the result appears in a clean music-themed window.
 
 ## Features
-- Console-run application
-- GUI `.wav` file chooser (Swing)
-- Real-time pitch detection with TarsosDSP
-- Note aggregation and filtering
-- Major/minor key signature matching
-- Average tuning offset calculation
 
-## Project Structure
-WAV-Scanner-PlainJava/
-├── src/
-│   └── WAVKeyDetector.java
-├── libs/
-│   ├── TarsosDSP-2.4.1.jar
-│   └── core-2.5.jar
-└── README.md
+- Drag-and-drop `.wav` and `.mp3` scanning
+- Bundled MP3 decoder support; no `ffmpeg` or `avconv` setup required
+- Native file picker on macOS and Windows
+- Estimated musical key
+- Average tuning offset in cents
+- Top detected notes
+- Double-click launchers for macOS and Windows
+- Release zip packaging for GitHub downloads
 
-## Prerequisites
-- Java 17 or later
-- JDK tools (`javac`, `java`) available on PATH
-- The `libs` directory must remain in the same folder as `src/`
+## Requirements
 
-## Running the Program Through the Console
+- Java 17 or newer to run the app
+- JDK 17 or newer to build from source
 
-### Step 1 — Navigate into the project folder
-cd WAV-Scanner-PlainJava
+## Download
 
-### Step 2 — Compile the program
+For regular users, use the files attached to the latest GitHub Release:
+
+- `WAV-Scanner-mac.zip`
+- `WAV-Scanner-windows.zip`
+
+Unzip the file for your system, then launch the app:
+
+- macOS: double-click `Launch WAV Scanner.command`
+- Windows: double-click `Launch WAV Scanner.bat`
+
+The Windows download has one user-facing `.bat` file. Build-only scripts live in `scripts/` and are not needed for normal use.
+
+## Build From Source
+
+Clone the repository:
+
+```bash
+git clone https://github.com/kamenran/WAV-Scanner.git
+cd WAV-Scanner
+```
+
+### macOS / Linux
+
+```bash
+./build.sh
+```
+
+This creates:
+
+- `dist/WAV-Scanner.jar`
+- `dist/Launch WAV Scanner.command`
+- `dist/Launch WAV Scanner.bat`
+- `dist/packages/WAV-Scanner-mac.zip`
+- `dist/packages/WAV-Scanner-windows.zip`
+
+On macOS, double-click `dist/Launch WAV Scanner.command`.
+
+If macOS says the script is not executable, run:
+
+```bash
+chmod +x build.sh "Launch WAV Scanner.command"
+```
+
+### Windows
+
+```bat
+scripts\build-windows.bat
+```
+
+This creates:
+
+- `dist\WAV-Scanner.jar`
+- `dist\Launch WAV Scanner.bat`
+
+Double-click `dist\Launch WAV Scanner.bat`.
+
+## GitHub Release Packaging
+
+To create release zip files, run:
+
+```bash
+./build.sh
+```
+
+Attach these generated files to a GitHub Release:
+
+- `dist/packages/WAV-Scanner-mac.zip`
+- `dist/packages/WAV-Scanner-windows.zip`
+
+To build a Windows `.exe` installer instead, run this on Windows with JDK 17+ installed:
+
+```bat
+scripts\build-windows-exe.bat
+```
+
+`jpackage` may require the WiX Toolset for `.exe` installer output.
+
+## Development Run
+
 macOS / Linux:
-javac -cp "libs/*" src/WAVKeyDetector.java
+
+```bash
+javac -cp "libs/*" -d out src/WAVKeyDetector.java
+java -cp "libs/*:out" WAVKeyDetector
+```
 
 Windows:
-javac -cp "libs/*" src\WAVKeyDetector.java
 
-### Step 3 — Run the program
-macOS / Linux:
-java -cp "libs/*:src" WAVKeyDetector
-
-Windows:
-java -cp "libs/*;src" WAVKeyDetector
-
-A file chooser window will appear. Select a `.wav` file to begin analysis. Results will print directly in the terminal.
-
-## How the Program Works
-1. Prompts the user to select a `.wav` file.
-2. Streams audio through the TarsosDSP AudioDispatcher.
-3. Performs frame-by-frame pitch detection.
-4. Converts detected frequencies to MIDI notes and note names.
-5. Aggregates pitch data across the entire file.
-6. Matches detected notes to major/minor key signatures.
-7. Outputs the estimated key and tuning offset to the console.
+```bat
+javac -cp "libs/*" -d out src\WAVKeyDetector.java
+java -cp "libs/*;out" WAVKeyDetector
+```
 
 ## Notes
-- The algorithm is designed for simple, monophonic audio (vocals, single instruments, isolated notes).
-- Full beats, drums, or multilayered mixes may produce limited or no pitch data due to overlapping harmonics.
 
-## Technology Stack
-- Java 17
-- TarsosDSP
-- Swing (JFileChooser)
+- Best results come from simple, clear audio such as vocals, single instruments, or isolated notes.
+- Dense full mixes and drum-heavy audio may produce less reliable key estimates.
+- Build output is ignored by Git. Commit source files and libraries, then attach generated zip files to GitHub Releases.
